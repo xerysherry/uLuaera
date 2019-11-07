@@ -1,0 +1,8 @@
+Library
+Temp
+UnityPackageManager
+*.sln
+/Assets/.vscode
+/Assets/Save
+/Assets/Save.meta
+/Build
