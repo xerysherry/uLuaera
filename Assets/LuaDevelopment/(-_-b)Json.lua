@@ -41,7 +41,11 @@ local base = _G
 -----------------------------------------------------------------------------
 -- Module declaration
 -----------------------------------------------------------------------------
-module("json")
+
+-- XLua Test
+if not CS then
+  module("json")
+end
 
 -- Public functions
 

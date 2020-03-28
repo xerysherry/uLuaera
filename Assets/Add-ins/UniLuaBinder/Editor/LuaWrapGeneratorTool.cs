@@ -25,7 +25,7 @@ public class LuaTool : EditorWindow
         }
         if(GUILayout.Button("DeployRuntime"))
         {
-            Lua.Resource.Deploy(Lua.Resource.kLuaScriptRuntimePath);
+            Lua.Resource.Deploy(Lua.Resource.LuaScriptRuntimePath);
             AssetDatabase.Refresh();
         }
     }

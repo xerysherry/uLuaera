@@ -1,0 +1,21 @@
+﻿
+
+<linker>
+
+	<assembly fullname="UnityEngine.CoreModule">
+	    <type fullname="UnityEngine.Color" preserve="all"/>
+		<type fullname="UnityEngine.Time" preserve="all"/>
+		<type fullname="UnityEngine.Debug" preserve="all"/>
+		
+	</assembly>
+
+	<assembly fullname="Assembly-CSharp">
+	    <type fullname="LuaUtils" preserve="all"/>
+		<type fullname="FlagBit" preserve="all"/>
+		<type fullname="Printer" preserve="all"/>
+		<type fullname="StringHelper" preserve="all"/>
+		<type fullname="Config" preserve="all"/>
+		
+	</assembly>
+
+</linker>

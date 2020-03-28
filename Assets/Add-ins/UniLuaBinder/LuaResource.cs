@@ -16,7 +16,7 @@ namespace Lua
         /// <summary>
         /// Lua调试代码文件夹
         /// </summary>
-        public static readonly string kLuaScriptRuntimePath = "/Lua";
+        public static string LuaScriptRuntimePath = "/Lua";
         public static readonly string kLuaScriptDevelopmentPath = "/LuaDevelopment";
 
 #if UNITY_EDITOR
@@ -108,10 +108,12 @@ namespace Lua
             if(include_files.TryGetValue(name, out script))
                 return script;
 
-            var fullpath = string.Concat(script_path, kLuaScriptRuntimePath, "/", name, ".lua");
+            var fullpath = string.Concat(script_path, LuaScriptRuntimePath, "/", name, ".lua");
             script = LoadScript(name, fullpath);
             if(!string.IsNullOrEmpty(script))
                 return script;
+
+            Debug.LogError(fullpath);
 
 #if UNITY_EDITOR
             fullpath = string.Concat(script_path, kLuaScriptDevelopmentPath, "/", name, ".lua");
@@ -134,7 +136,7 @@ namespace Lua
         }
         public static void SetScriptPath(string path)
         {
-            script_path = path;
+            _script_path = path;
         }
         public static List<string> EnumScripts(string path)
         {
@@ -142,7 +144,7 @@ namespace Lua
                 path = "";
 
             List<string> list = new List<string>();
-            var fullpath = string.Concat(script_path, kLuaScriptRuntimePath, "/",  path);
+            var fullpath = string.Concat(script_path, LuaScriptRuntimePath, "/",  path);
             var files = Directory.GetFiles(fullpath, "*.lua", SearchOption.AllDirectories);
             for (var i = 0; i < files.Length; ++i)
             {
@@ -160,7 +162,20 @@ namespace Lua
 
             return list;
         }
-        static string script_path = Application.dataPath;
+        static string script_path
+        {
+            get
+            {
+#if UNITY_EDITOR
+                _script_path = Application.dataPath;
+#else
+                _script_path = GenericHelper.GetFolder(Application.dataPath);
+#endif
+                return _script_path;
+            }
+        }
+        static string _script_path = null;
+
         static Dictionary<string, string> include_files = new Dictionary<string, string>();
     }
 }

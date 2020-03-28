@@ -8,7 +8,25 @@ public class Core : LuaMono
 {
     new void Awake()
     {
+        if (!use_xlua)
+        {
+            base.Awake();
+            GetComponent<XLuaSingleton>().enabled = false;
+            GetComponent<XLuaMono>().enabled = false;
+        }
+        else
+        {
+            GetComponent<XLuaSingleton>().enabled = true;
+            GetComponent<XLuaMono>().enabled = true;
+        }
+    }
+    new void Start()
+    {
         Application.targetFrameRate = 60;
+        if(!string.IsNullOrEmpty(LuaPath))
+        {
+            Lua.Resource.LuaScriptRuntimePath = "/" + LuaPath;
+        }
         SpriteManager.Init();
         Config.SetResourcePath("", Config.Location.PACKAGE);
         foreach(var sr in sprites)
@@ -16,11 +34,15 @@ public class Core : LuaMono
             SpriteManager.SetSpriteImage(sr.name, sr.resouce, 
                                         sr.rect, sr.border);
         }
-
         Printer.SelectConsole(console);
 
+        if(use_xlua)
+        {
+            enabled = false;
+            return;
+        }
         Lua.Resource.SetScriptPath(Config.GetProjectPath());
-        base.Awake();    
+        base.Start();    
     }
     new void OnDestroy()
     {
@@ -65,5 +87,7 @@ public class Core : LuaMono
         public Rect rect;
         public Vector4 border;
     }
+    public bool use_xlua;
+    public string LuaPath;
     public List<SpriteRegister> sprites;
 }

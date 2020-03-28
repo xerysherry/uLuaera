@@ -61,8 +61,18 @@ function WaitFrame(count)
 end
 
 local UnityTime = UnityEngine.Time
-local GetUnscaledTime = UnityTime.GetUnscaledTime
-local GetTime = UnityTime.GetTime
+local GetUnscaledTime
+local GetTime
+
+if CS then
+    -- XLua
+    GetUnscaledTime = function() return UnityTime.unscaledTime end
+    GetTime = function() return UnityTime.time end
+else
+    -- UniLua
+    GetUnscaledTime = UnityTime.GetUnscaledTime
+    GetTime = UnityTime.GetTime
+end
 
 function WaitSecond(t)
     local r = GetTime() + t
@@ -102,9 +112,6 @@ local _MonoBase =
                 f = i
                 break
             end
-        end
-        if f then
-           
         end
     end,
     StopAllCoroutine = function(self)

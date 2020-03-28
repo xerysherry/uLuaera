@@ -327,11 +327,11 @@ public class ConsoleContent : MonoBehaviour
 
         return local;
     }
-    public void SetDirty()
-    {
-        dirty = true;
-        //ToBottom();
-    }
+    //public void SetDirty()
+    //{
+    //    dirty = true;
+    //    //ToBottom();
+    //}
     public void SetDragEnable(bool value)
     {
         drag_enable = value;
